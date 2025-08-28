@@ -62,67 +62,94 @@ namespace Calculadora
 
             double num2 = 0;
             bool operacaoValida = true;
+            double resultado = 0; 
+            string expressao = "";
+            double num1 = 0;
 
 
+            if (operacao == "+" || operacao == "-" || operacao == "*" || operacao == "/" || operacao == "^" || operacao == "%")
+            {
+                Console.Write("Digite o primeiro número: ");
+                while (!double.TryParse(Console.ReadLine(), out  num1))
+                {
+                    Console.WriteLine("Entrada inválida. Por favor, digite um número.");
+                }
+
+                Console.Write("Digite o segundo número: ");
+                while (!double.TryParse(Console.ReadLine(), out  num2))
+                {
+                    Console.WriteLine("Entrada inválida. Por favor, digite um número.");
+                }
+            }
+            else if (operacao == "cos" || operacao == "tan" || operacao == "rq")
+            {
+                Console.Write("Digite o número: ");
+                while (!double.TryParse(Console.ReadLine(), out num1))
+                {
+                    Console.WriteLine("Entrada inválida. Por favor, digite um número.");
+                }
+            }
             switch (operacao)
             {
                 case "+":
+                    resultado = num1 + num2;
+                    expressao = $"{num1} + {num2}";
+                    break;
                 case "-":
+                    resultado = num1 - num2;
+                    expressao = $"{num1} - {num2}";
+                    break;
                 case "*":
+                    resultado = num1 * num2;
+                    expressao = $"{num1} * {num2}";
+                    break;
                 case "/":
+                    if (num2 == 0)
+                    {
+                        Console.WriteLine("Erro: Divisão por zero.");
+                        operacaoValida = false;
+                        return;
+                    }
+                    resultado = num1 / num2;
+                    expressao = $"{num1} / {num2}";
+                    break;
                 case "^":
+                    resultado = Math.Pow(num1, num2);
+                    expressao = $"{num1} ^ {num2}";
+                    break;
                 case "%":
-
-                    while (true)
-                    {
-                        Console.Write("Digite o primeiro número: ");
-                        if (double.TryParse(Console.ReadLine(), out double num1)) break;
-                        Console.WriteLine("Entrada inválida. Por favor, digite um número.");
-                    }
-                    while (true)
-                    {
-                        Console.Write("Digite o segundo número: ");
-                        if (double.TryParse(Console.ReadLine(), out num2)) break;
-                        Console.WriteLine("Entrada inválida. Por favor, digite um número.");
-                    }
+                    resultado = num1 % num2;
+                    expressao = $"{num1} % {num2}";
                     break;
                 case "cos":
+                    resultado = Math.Cos(num1);
+                    expressao = $"cos({num1})";
+                    break;
                 case "tan":
+                    resultado = Math.Tan(num1);
+                    expressao = $"tan({num1})";
+                    break;
                 case "rq":
-
-                    while (true)
+                    if (num1 < 0)
                     {
-                        Console.Write("Digite o número: ");
-                        if (double.TryParse(Console.ReadLine(), out double num1)) break;
-                        Console.WriteLine("Entrada inválida. Por favor, digite um número.");
+                        Console.WriteLine("Erro: Raiz quadrada de número negativo.");
+                        operacaoValida = false;
+                        return;
                     }
+                    resultado = Math.Sqrt(num1);
+                    expressao = $"√({num1})";
                     break;
                 default:
                     Console.WriteLine("Erro: Operação inválida.");
                     operacaoValida = false;
                     return;
+
             }
-
-            double resultado = 0; // Para inicializar a variavel do resultado
-            string expressao = ""; // Para armazenar a expressao
-
-            /*
-             * 
-             * 
-             * 
-             *  Onde colocar a parte do calculo
-             * 
-             * 
-             * 
-             * 
-             */
-
-
             if (operacaoValida)
             {
                 Console.WriteLine($"\nResultado: {expressao} = {resultado}");
 
-                // Armazenar os resultados nas 3 estruturas 
+                
                 fila.Enqueue(resultado); 
                 pilha.Push(resultado);     
                 lista.Add(resultado);    
